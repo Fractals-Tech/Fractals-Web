@@ -1,0 +1,2620 @@
+<!--
+  FRACTALS — WEBSITE
+  ─────────────────────────────────────────────────────
+  Aesthetic direction: Dark editorial precision — Bloomberg terminal meets Zurich design studio, every element earned its place through function not decoration.
+  Font pairing rationale: Fraunces brings warmth and personality to headlines through its variable optical sizing and distinctive serifs, grounding the brand in craft rather than sterility. Epilogue provides clean, geometric body text that reads like engineering documentation — technical but never cold.
+  One thing this site does that a typical AI site would not: The services grid is genuinely asymmetric with cards of different sizes and spans, and the hero avoids the centered-headline-with-illustration pattern entirely in favor of a left-heavy editorial layout.
+  Wordmark font: Optician Sans (self-hosted @font-face).
+  ─────────────────────────────────────────────────────
+-->
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Fractals — Cloud Consultancy &amp; Software Engineering</title>
+		<meta
+			name="description"
+			content="Fractals is a cloud consultancy and software engineering firm. We architect, build, and ship — cloud infrastructure, backend systems, and production software for teams that need it done right."
+		/>
+
+		<!-- Google Fonts: Fraunces (display) + Epilogue (body/UI) -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Epilogue:wght@300;400;500;600&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&display=swap"
+			rel="stylesheet"
+		/>
+
+		<style>
+			/* ─────────────────────────────────────
+       Optician Sans — wordmark only.
+       Self-hosted from GitHub (OFL license).
+       ───────────────────────────────────── */
+			@font-face {
+				font-family: "Optician Sans";
+				src: url("https://raw.githubusercontent.com/anewtypeofinterference/Optician-Sans/master/OpenType-TT/Optician-Sans.ttf")
+					format("truetype");
+				font-weight: 400;
+				font-style: normal;
+				font-display: swap;
+			}
+
+			/* ═══════════════════════════════════════
+       CUSTOM PROPERTIES
+       ═══════════════════════════════════════ */
+			:root {
+				/* Colors — Fractals Light Palette */
+				--color-bg: #f3f4f3;
+				--color-surface: #e9e7e3;
+				--color-border: #d6d1ca;
+				--color-accent: #91171f;
+				--color-text-primary: #0a0908;
+				--color-text-muted: #6b6058;
+				--color-amber: #91171f;
+				--color-footer-bg: #0a0908;
+				--color-crimson: #91171f;
+				--color-burgundy: #410b13;
+				--color-sand: #f9dbbd;
+				--color-offwhite: #f3f4f3;
+
+				/* Typography */
+				--font-display: "Fraunces", Georgia, serif;
+				--font-body: "Epilogue", sans-serif;
+				--font-wordmark: "Optician Sans", "Epilogue", sans-serif;
+
+				/* Spacing scale (8px base) */
+				--sp-1: 0.5rem; /* 8px */
+				--sp-2: 1rem; /* 16px */
+				--sp-3: 1.5rem; /* 24px */
+				--sp-4: 2rem; /* 32px */
+				--sp-5: 2.5rem; /* 40px */
+				--sp-6: 3rem; /* 48px */
+				--sp-8: 4rem; /* 64px */
+				--sp-10: 5rem; /* 80px */
+				--sp-12: 6rem; /* 96px */
+				--sp-16: 8rem; /* 128px */
+				--sp-20: 10rem; /* 160px */
+
+				/* Transitions */
+				--transition-fast: 180ms ease;
+				--transition-default: 200ms ease;
+				--transition-slow: 350ms ease;
+
+				/* Layout */
+				--max-width: 1320px;
+				--gutter: var(--sp-3);
+			}
+
+			@media (min-width: 768px) {
+				:root {
+					--gutter: var(--sp-5);
+				}
+			}
+
+			@media (min-width: 1200px) {
+				:root {
+					--gutter: var(--sp-8);
+				}
+			}
+
+			/* ═══════════════════════════════════════
+       RESET & BASE
+       ═══════════════════════════════════════ */
+			*,
+			*::before,
+			*::after {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			html {
+				scroll-behavior: smooth;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+			}
+
+			body {
+				font-family: var(--font-body);
+				font-weight: 400;
+				font-size: 1rem;
+				line-height: 1.65;
+				color: var(--color-text-primary);
+				background-color: var(--color-bg);
+				overflow-x: hidden;
+			}
+
+			img,
+			svg {
+				display: block;
+				max-width: 100%;
+			}
+
+			a {
+				color: inherit;
+				text-decoration: none;
+			}
+
+			button {
+				font-family: inherit;
+				cursor: pointer;
+				border: none;
+				background: none;
+			}
+
+			/* ═══════════════════════════════════════
+       UTILITY
+       ═══════════════════════════════════════ */
+			.container {
+				width: 100%;
+				max-width: var(--max-width);
+				margin-inline: auto;
+				padding-inline: var(--gutter);
+			}
+
+			.section-pad {
+				padding-block: var(--sp-12);
+			}
+
+			@media (min-width: 768px) {
+				.section-pad {
+					padding-block: var(--sp-16);
+				}
+			}
+
+			.section-title {
+				font-family: var(--font-display);
+				font-weight: 400;
+				font-size: clamp(2rem, 4vw, 3.25rem);
+				color: var(--color-text-primary);
+				line-height: 1.15;
+				margin-bottom: var(--sp-2);
+			}
+
+			.section-subtitle {
+				font-family: var(--font-body);
+				font-size: 0.9375rem;
+				color: var(--color-text-muted);
+				margin-bottom: var(--sp-8);
+				max-width: 44ch;
+			}
+
+			.label-caps {
+				font-family: var(--font-body);
+				font-size: 0.6875rem;
+				font-weight: 500;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+			}
+
+			/* Scroll animation base */
+			.reveal {
+				opacity: 0;
+				transform: translateY(20px);
+				transition:
+					opacity 0.6s ease,
+					transform 0.6s ease;
+			}
+
+			.reveal.visible {
+				opacity: 1;
+				transform: translateY(0);
+			}
+
+			/* Stagger children */
+			.stagger > .reveal:nth-child(1) {
+				transition-delay: 0ms;
+			}
+			.stagger > .reveal:nth-child(2) {
+				transition-delay: 80ms;
+			}
+			.stagger > .reveal:nth-child(3) {
+				transition-delay: 160ms;
+			}
+			.stagger > .reveal:nth-child(4) {
+				transition-delay: 240ms;
+			}
+			.stagger > .reveal:nth-child(5) {
+				transition-delay: 320ms;
+			}
+			.stagger > .reveal:nth-child(6) {
+				transition-delay: 400ms;
+			}
+
+			/* ═══════════════════════════════════════
+       1. NAV
+       ═══════════════════════════════════════ */
+			.site-header {
+				position: sticky;
+				top: 0;
+				z-index: 100;
+				background-color: var(--color-bg);
+			}
+
+			.nav-inner {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				height: var(--sp-10);
+			}
+
+			@media (min-width: 768px) {
+				.nav-inner {
+					height: var(--sp-12);
+				}
+			}
+
+			.wordmark {
+				font-family: var(--font-wordmark);
+				font-weight: 400;
+				font-size: 2rem;
+				text-transform: uppercase;
+				color: var(--color-text-primary);
+				white-space: nowrap;
+			}
+
+			.nav-links {
+				display: none;
+				list-style: none;
+				gap: var(--sp-5);
+				align-items: center;
+			}
+
+			@media (min-width: 768px) {
+				.nav-links {
+					display: flex;
+				}
+			}
+
+			.nav-links a {
+				font-family: var(--font-body);
+				font-size: 0.6875rem;
+				font-weight: 500;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: var(--color-text-muted);
+				transition: color var(--transition-default);
+			}
+
+			.nav-links a:hover,
+			.nav-links a:focus-visible {
+				color: var(--color-accent);
+			}
+
+			.nav-cta {
+				display: none;
+				font-family: var(--font-body);
+				font-size: 0.75rem;
+				font-weight: 500;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+				color: var(--color-accent);
+				border: 1px solid var(--color-accent);
+				padding: var(--sp-1) var(--sp-3);
+				transition:
+					background-color var(--transition-fast),
+					color var(--transition-fast);
+			}
+
+			.nav-cta:hover,
+			.nav-cta:focus-visible {
+				background-color: var(--color-accent);
+				color: var(--color-offwhite);
+			}
+
+			@media (min-width: 768px) {
+				.nav-cta {
+					display: inline-block;
+				}
+			}
+
+			/* Hamburger */
+			.hamburger {
+				display: flex;
+				flex-direction: column;
+				gap: 5px;
+				padding: var(--sp-1);
+				background: none;
+				border: none;
+				cursor: pointer;
+				z-index: 110;
+			}
+
+			@media (min-width: 768px) {
+				.hamburger {
+					display: none;
+				}
+			}
+
+			.hamburger span {
+				display: block;
+				width: 22px;
+				height: 1px;
+				background-color: var(--color-accent);
+				transition:
+					transform var(--transition-default),
+					opacity var(--transition-default);
+			}
+
+			.hamburger.active span:nth-child(1) {
+				transform: translateY(6px) rotate(45deg);
+			}
+
+			.hamburger.active span:nth-child(2) {
+				opacity: 0;
+			}
+
+			.hamburger.active span:nth-child(3) {
+				transform: translateY(-6px) rotate(-45deg);
+			}
+
+			/* Mobile drawer */
+			.mobile-overlay {
+				position: fixed;
+				inset: 0;
+				background-color: rgba(10, 9, 8, 0.4);
+				z-index: 90;
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity var(--transition-slow);
+			}
+
+			.mobile-overlay.open {
+				opacity: 1;
+				pointer-events: auto;
+			}
+
+			.mobile-drawer {
+				position: fixed;
+				top: 0;
+				right: 0;
+				width: min(320px, 85vw);
+				height: 100%;
+				background-color: var(--color-bg);
+				box-shadow: -8px 0 30px rgba(10, 9, 8, 0.1);
+				z-index: 95;
+				transform: translateX(100%);
+				transition: transform var(--transition-slow);
+				padding: var(--sp-12) var(--sp-5);
+				display: flex;
+				flex-direction: column;
+				gap: var(--sp-5);
+			}
+
+			.mobile-drawer.open {
+				transform: translateX(0);
+			}
+
+			.mobile-drawer a {
+				font-family: var(--font-body);
+				font-size: 1rem;
+				font-weight: 500;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+				color: var(--color-text-primary);
+				padding: var(--sp-2) 0;
+				display: block;
+				min-height: 48px;
+				display: flex;
+				align-items: center;
+				border-bottom: 1px solid var(--color-border);
+				transition: color var(--transition-default);
+			}
+
+			.mobile-drawer a:hover {
+				color: var(--color-accent);
+			}
+
+			.mobile-drawer .nav-cta-mobile {
+				color: var(--color-accent);
+				border: 1px solid var(--color-accent);
+				padding: var(--sp-2) var(--sp-3);
+				text-align: center;
+				justify-content: center;
+				margin-top: var(--sp-4);
+				border-bottom: none;
+				transition:
+					background-color var(--transition-fast),
+					color var(--transition-fast);
+			}
+
+			.mobile-drawer .nav-cta-mobile:hover {
+				background-color: var(--color-accent);
+				color: var(--color-offwhite);
+			}
+
+			/* ═══════════════════════════════════════
+       2. HERO
+       ═══════════════════════════════════════ */
+			.hero {
+				min-height: 100vh;
+				display: flex;
+				align-items: center;
+				position: relative;
+				overflow: hidden;
+			}
+
+			.hero-bg-canvas {
+				position: absolute;
+				inset: 0;
+				z-index: 0;
+			}
+
+			.hero-bg-canvas canvas {
+				width: 100% !important;
+				height: 100% !important;
+				position: absolute;
+				inset: 0;
+			}
+
+			.hero-content {
+				position: relative;
+				z-index: 2;
+				padding: var(--sp-8) var(--gutter) var(--sp-6);
+				width: 100%;
+				max-width: var(--max-width);
+				margin-inline: auto;
+			}
+
+			@media (min-width: 768px) {
+				.hero-content {
+					padding: var(--sp-16) var(--gutter);
+				}
+			}
+
+			.aws-badge {
+				display: inline-flex;
+				align-items: center;
+				gap: 8px;
+				margin-bottom: var(--sp-4);
+				padding: 6px 14px 6px 10px;
+				background-color: var(--color-surface);
+				border: 1px solid var(--color-border);
+				border-radius: 2px;
+			}
+
+			.aws-badge-text {
+				font-family: var(--font-body);
+				font-size: 0.6875rem;
+				font-weight: 600;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: var(--color-text-muted);
+			}
+
+			.hero-headline {
+				font-family: var(--font-display);
+				font-weight: 400;
+				font-size: clamp(2.5rem, 5.5vw, 5rem);
+				line-height: 1.08;
+				color: var(--color-text-primary);
+				margin-bottom: var(--sp-4);
+				max-width: 24ch;
+			}
+
+			.hero-sub {
+				font-family: var(--font-body);
+				font-size: 1.0625rem;
+				color: var(--color-text-muted);
+				margin-bottom: var(--sp-6);
+				max-width: 42ch;
+				line-height: 1.5;
+			}
+
+			.hero-ctas {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				gap: var(--sp-4);
+			}
+
+			.btn-primary {
+				display: inline-block;
+				font-family: var(--font-body);
+				font-size: 0.8125rem;
+				font-weight: 600;
+				letter-spacing: 0.04em;
+				background-color: var(--color-accent);
+				color: var(--color-offwhite);
+				padding: 0.875rem var(--sp-4);
+				border: none;
+				transition: opacity var(--transition-fast);
+			}
+
+			.btn-primary:hover {
+				opacity: 0.88;
+			}
+
+			.btn-arrow {
+				display: inline-flex;
+				align-items: center;
+				gap: var(--sp-1);
+				font-family: var(--font-body);
+				font-size: 0.8125rem;
+				font-weight: 500;
+				color: var(--color-text-primary);
+				transition: color var(--transition-default);
+			}
+
+			.btn-arrow:hover {
+				color: var(--color-accent);
+			}
+
+			.btn-arrow .arrow {
+				display: inline-block;
+				transition: transform var(--transition-default);
+			}
+
+			.btn-arrow:hover .arrow {
+				transform: translateX(4px);
+			}
+
+			.hero-divider {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				height: 1px;
+				background-color: var(--color-border);
+			}
+
+			/* ═══════════════════════════════════════
+       3. SERVICES — "THE WORK"
+       ═══════════════════════════════════════ */
+			.services-group {
+				margin-bottom: var(--sp-8);
+			}
+
+			.services-group:last-child {
+				margin-bottom: 0;
+			}
+
+			.services-group-label {
+				font-family: var(--font-body);
+				font-size: 0.6875rem;
+				font-weight: 600;
+				letter-spacing: 0.15em;
+				text-transform: uppercase;
+				color: var(--color-accent);
+				margin-bottom: var(--sp-4);
+				padding-bottom: var(--sp-2);
+				border-bottom: 1px solid var(--color-border);
+			}
+
+			.services-grid {
+				display: grid;
+				grid-template-columns: 1fr;
+				gap: var(--sp-3);
+			}
+
+			@media (min-width: 768px) {
+				.services-grid {
+					grid-template-columns: 1fr 1fr;
+					gap: var(--sp-3);
+				}
+
+				.services-grid .svc-card--anchor {
+					grid-column: 1 / -1;
+				}
+			}
+
+			@media (min-width: 1200px) {
+				.services-grid {
+					grid-template-columns: repeat(3, 1fr);
+				}
+
+				.services-grid .svc-card--anchor {
+					grid-column: 1 / 3;
+				}
+			}
+
+			.svc-card {
+				background-color: var(--color-surface);
+				border: 1px solid var(--color-border);
+				border-radius: 3px;
+				padding: var(--sp-5);
+				position: relative;
+				overflow: hidden;
+				transition: border-color var(--transition-default);
+			}
+
+			.svc-card::before {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				height: 2px;
+				background-color: var(--color-accent);
+				transform: scaleX(0);
+				transform-origin: left;
+				transition: transform var(--transition-default);
+			}
+
+			.svc-card:hover {
+				border-color: var(--color-accent);
+			}
+
+			.svc-card:hover::before {
+				transform: scaleX(1);
+			}
+
+			.svc-card-title {
+				font-family: var(--font-display);
+				font-weight: 500;
+				font-size: 1.375rem;
+				color: var(--color-text-primary);
+				margin-bottom: var(--sp-2);
+				line-height: 1.25;
+			}
+
+			.svc-card-body {
+				font-family: var(--font-body);
+				font-size: 0.9375rem;
+				color: var(--color-text-muted);
+				line-height: 1.6;
+				margin-bottom: var(--sp-3);
+			}
+
+			.svc-card-anchors {
+				font-family: var(--font-body);
+				font-size: 0.75rem;
+				color: var(--color-text-muted);
+				font-style: italic;
+				opacity: 0.7;
+				line-height: 1.5;
+			}
+
+			/* ═══════════════════════════════════════
+       4. PROCESS
+       ═══════════════════════════════════════ */
+			.process-intro {
+				font-family: var(--font-body);
+				font-size: 1.0625rem;
+				color: var(--color-text-muted);
+				margin-bottom: var(--sp-8);
+				max-width: 48ch;
+			}
+
+			.process-timeline {
+				display: grid;
+				grid-template-columns: 1fr;
+				gap: var(--sp-6);
+			}
+
+			@media (min-width: 768px) {
+				.process-timeline {
+					grid-template-columns: repeat(4, 1fr);
+					gap: var(--sp-4);
+					position: relative;
+				}
+
+				.process-timeline::before {
+					content: "";
+					position: absolute;
+					top: 1.6rem;
+					left: calc(12.5% + var(--sp-2));
+					right: calc(12.5% + var(--sp-2));
+					height: 1px;
+					border-top: 1px dashed var(--color-accent);
+					opacity: 0.4;
+				}
+			}
+
+			.phase {
+				position: relative;
+			}
+
+			.phase-number {
+				font-family: var(--font-body);
+				font-size: 0.6875rem;
+				font-weight: 600;
+				letter-spacing: 0.2em;
+				text-transform: uppercase;
+				color: var(--color-crimson);
+				margin-bottom: var(--sp-2);
+			}
+
+			.phase-name {
+				font-family: var(--font-display);
+				font-weight: 400;
+				font-size: 1.5rem;
+				color: var(--color-text-primary);
+				margin-bottom: var(--sp-2);
+				line-height: 1.2;
+			}
+
+			.phase-desc {
+				font-family: var(--font-body);
+				font-size: 0.875rem;
+				color: var(--color-text-muted);
+				line-height: 1.65;
+			}
+
+			/* ═══════════════════════════════════════
+       5. STACK
+       ═══════════════════════════════════════ */
+			.stack-badges {
+				display: flex;
+				flex-wrap: wrap;
+				gap: var(--sp-1);
+				margin-bottom: var(--sp-6);
+			}
+
+			.badge {
+				font-family: var(--font-body);
+				font-size: 0.75rem;
+				font-weight: 400;
+				letter-spacing: 0.05em;
+				font-variant-numeric: tabular-nums;
+				color: var(--color-text-muted);
+				background-color: var(--color-surface);
+				border: 1px solid var(--color-border);
+				border-radius: 2px;
+				padding: 6px 14px;
+				white-space: nowrap;
+				transition:
+					border-color var(--transition-default),
+					color var(--transition-default);
+			}
+
+			.badge:hover {
+				border-color: var(--color-accent);
+				color: var(--color-text-primary);
+			}
+
+			.stack-note {
+				font-family: var(--font-body);
+				font-size: 0.875rem;
+				color: var(--color-text-muted);
+				max-width: 52ch;
+			}
+
+			/* ═══════════════════════════════════════
+       6. WHO WE SERVE
+       ═══════════════════════════════════════ */
+			.manifesto-text {
+				font-family: var(--font-display);
+				font-weight: 400;
+				font-size: clamp(1.75rem, 3.5vw, 3.25rem);
+				line-height: 1.25;
+				color: var(--color-text-primary);
+				max-width: 32ch;
+				margin-bottom: var(--sp-12);
+			}
+
+			.manifesto-text .accent-phrase {
+				color: var(--color-accent);
+			}
+
+			.verticals {
+				display: flex;
+				gap: var(--sp-3);
+				overflow-x: auto;
+				-webkit-overflow-scrolling: touch;
+				scrollbar-width: thin;
+				scrollbar-color: var(--color-border) transparent;
+				padding-bottom: var(--sp-2);
+			}
+
+			@media (min-width: 1200px) {
+				.verticals {
+					display: grid;
+					grid-template-columns: 1.2fr 1fr 0.9fr 0.85fr 1.05fr;
+					overflow: visible;
+					padding-bottom: 0;
+				}
+			}
+
+			.vertical-tile {
+				min-width: 240px;
+				flex-shrink: 0;
+				padding: var(--sp-4) var(--sp-3);
+				border-left: 3px solid transparent;
+				transition: border-color var(--transition-default);
+			}
+
+			@media (min-width: 1200px) {
+				.vertical-tile {
+					min-width: 0;
+				}
+			}
+
+			.vertical-tile:hover {
+				border-left-color: var(--color-accent);
+			}
+
+			.vertical-tile:hover .vertical-name {
+				color: var(--color-text-primary);
+			}
+
+			.vertical-name {
+				font-family: var(--font-display);
+				font-weight: 500;
+				font-size: 1.25rem;
+				color: var(--color-text-muted);
+				margin-bottom: var(--sp-1);
+				line-height: 1.3;
+				transition: color var(--transition-default);
+			}
+
+			.vertical-desc {
+				font-family: var(--font-body);
+				font-size: 0.8125rem;
+				color: var(--color-text-muted);
+				line-height: 1.6;
+				opacity: 0.7;
+			}
+
+			/* ═══════════════════════════════════════
+       7. CREDENTIALS
+       ═══════════════════════════════════════ */
+			.cred-grid {
+				display: grid;
+				grid-template-columns: 1fr;
+				gap: var(--sp-3);
+			}
+
+			@media (min-width: 768px) {
+				.cred-grid {
+					grid-template-columns: repeat(3, 1fr);
+				}
+			}
+
+			.cred-card {
+				background-color: var(--color-surface);
+				border: 1px solid var(--color-border);
+				border-radius: 2px;
+				padding: var(--sp-5);
+				position: relative;
+			}
+
+			.cred-card-title {
+				font-family: var(--font-display);
+				font-weight: 500;
+				font-size: 1.25rem;
+				color: var(--color-text-primary);
+				margin-bottom: var(--sp-1);
+				line-height: 1.3;
+			}
+
+			.cred-card-tag {
+				font-family: var(--font-body);
+				font-size: 0.6875rem;
+				font-weight: 500;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				color: var(--color-amber);
+				margin-bottom: var(--sp-2);
+			}
+
+			.cred-card-body {
+				font-family: var(--font-body);
+				font-size: 0.875rem;
+				color: var(--color-text-muted);
+				line-height: 1.65;
+			}
+
+			/* ═══════════════════════════════════════
+       8. CTA & FOOTER
+       ═══════════════════════════════════════ */
+			.cta-section {
+				background-color: var(--color-surface);
+				position: relative;
+				overflow: hidden;
+			}
+
+			.cta-inner {
+				display: grid;
+				grid-template-columns: 1fr;
+				gap: var(--sp-8);
+			}
+
+			@media (min-width: 768px) {
+				.cta-inner {
+					grid-template-columns: 1fr 1.1fr;
+					gap: var(--sp-10);
+					align-items: start;
+				}
+			}
+
+			.cta-headline {
+				font-family: var(--font-display);
+				font-weight: 400;
+				font-size: clamp(1.75rem, 3.5vw, 3rem);
+				line-height: 1.15;
+				color: var(--color-text-primary);
+				margin-bottom: var(--sp-3);
+			}
+
+			.cta-sub {
+				font-family: var(--font-body);
+				font-size: 1rem;
+				color: var(--color-text-muted);
+				max-width: 42ch;
+				margin-bottom: var(--sp-6);
+			}
+
+			.cta-detail {
+				display: flex;
+				flex-direction: column;
+				gap: var(--sp-3);
+			}
+
+			.cta-detail-item {
+				display: flex;
+				align-items: flex-start;
+				gap: var(--sp-2);
+			}
+
+			.cta-detail-icon {
+				flex-shrink: 0;
+				width: 20px;
+				height: 20px;
+				margin-top: 2px;
+				color: var(--color-accent);
+			}
+
+			.cta-detail-text {
+				font-family: var(--font-body);
+				font-size: 0.875rem;
+				color: var(--color-text-muted);
+				line-height: 1.55;
+			}
+
+			.cta-detail-text a {
+				color: var(--color-accent);
+				border-bottom: 1px solid transparent;
+				transition: border-color var(--transition-default);
+			}
+
+			.cta-detail-text a:hover {
+				border-bottom-color: var(--color-accent);
+			}
+
+			/* ── Consultation Form ── */
+			.consult-form {
+				display: flex;
+				flex-direction: column;
+				gap: var(--sp-3);
+			}
+
+			.form-row {
+				display: grid;
+				grid-template-columns: 1fr;
+				gap: var(--sp-3);
+			}
+
+			@media (min-width: 768px) {
+				.form-row--half {
+					grid-template-columns: 1fr 1fr;
+				}
+			}
+
+			.form-field {
+				display: flex;
+				flex-direction: column;
+				gap: 6px;
+			}
+
+			.form-label {
+				font-family: var(--font-body);
+				font-size: 0.6875rem;
+				font-weight: 500;
+				letter-spacing: 0.08em;
+				text-transform: uppercase;
+				color: var(--color-text-muted);
+			}
+
+			.form-input,
+			.form-select,
+			.form-textarea {
+				font-family: var(--font-body);
+				font-size: 0.9375rem;
+				font-weight: 400;
+				color: var(--color-text-primary);
+				background-color: var(--color-bg);
+				border: 1px solid var(--color-border);
+				border-radius: 2px;
+				padding: 0.75rem var(--sp-2);
+				transition: border-color var(--transition-default);
+				width: 100%;
+				-webkit-appearance: none;
+				appearance: none;
+			}
+
+			.form-input::placeholder,
+			.form-textarea::placeholder {
+				color: var(--color-text-muted);
+				opacity: 0.5;
+			}
+
+			.form-input:focus,
+			.form-select:focus,
+			.form-textarea:focus {
+				outline: none;
+				border-color: var(--color-accent);
+			}
+
+			.form-select {
+				background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%236B6058' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+				background-repeat: no-repeat;
+				background-position: right var(--sp-2) center;
+				padding-right: var(--sp-5);
+				cursor: pointer;
+			}
+
+			.form-select option {
+				background-color: var(--color-bg);
+				color: var(--color-text-primary);
+			}
+
+			.form-select optgroup {
+				background-color: var(--color-bg);
+				color: var(--color-text-muted);
+				font-style: normal;
+				font-weight: 600;
+				font-size: 0.75rem;
+				letter-spacing: 0.03em;
+			}
+
+			.form-select optgroup option {
+				font-weight: 400;
+				color: var(--color-text-primary);
+			}
+
+			.form-textarea {
+				resize: vertical;
+				min-height: 100px;
+				line-height: 1.55;
+			}
+
+			.form-submit {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				gap: var(--sp-1);
+				font-family: var(--font-body);
+				font-size: 0.875rem;
+				font-weight: 600;
+				letter-spacing: 0.03em;
+				background-color: var(--color-accent);
+				color: var(--color-offwhite);
+				border: none;
+				border-radius: 2px;
+				padding: 0.875rem var(--sp-4);
+				cursor: pointer;
+				transition: opacity var(--transition-fast);
+				width: 100%;
+			}
+
+			@media (min-width: 768px) {
+				.form-submit {
+					width: auto;
+					align-self: flex-start;
+				}
+			}
+
+			.form-submit:hover {
+				opacity: 0.88;
+			}
+
+			.form-submit .arrow {
+				display: inline-block;
+				transition: transform var(--transition-default);
+				font-size: 1rem;
+			}
+
+			.form-submit:hover .arrow {
+				transform: translateX(3px);
+			}
+
+			.form-note {
+				font-family: var(--font-body);
+				font-size: 0.75rem;
+				color: var(--color-text-muted);
+				opacity: 0.6;
+			}
+
+			/* Success state */
+			.form-success {
+				display: none;
+				padding: var(--sp-6) 0;
+			}
+
+			.form-success.visible {
+				display: block;
+			}
+
+			.form-success-title {
+				font-family: var(--font-display);
+				font-weight: 400;
+				font-size: 1.5rem;
+				color: var(--color-text-primary);
+				margin-bottom: var(--sp-2);
+			}
+
+			.form-success-text {
+				font-family: var(--font-body);
+				font-size: 0.9375rem;
+				color: var(--color-text-muted);
+				line-height: 1.55;
+			}
+
+			/* Accent line above footer */
+			.footer-accent-line {
+				height: 1px;
+				background-color: var(--color-border);
+			}
+
+			.site-footer {
+				background-color: var(--color-footer-bg);
+				padding: var(--sp-8) 0 var(--sp-6);
+			}
+
+			.footer-inner {
+				display: grid;
+				grid-template-columns: 1fr;
+				gap: var(--sp-6);
+			}
+
+			@media (min-width: 768px) {
+				.footer-inner {
+					grid-template-columns: 1.5fr 1fr 1fr;
+					gap: var(--sp-4);
+				}
+			}
+
+			.footer-wordmark {
+				font-family: var(--font-wordmark);
+				font-weight: 400;
+				font-size: 1.25rem;
+				text-transform: uppercase;
+				color: #9e8e85;
+				margin-bottom: var(--sp-1);
+			}
+
+			.footer-tagline {
+				font-family: var(--font-body);
+				font-size: 0.75rem;
+				color: #9e8e85;
+				opacity: 0.6;
+				margin-bottom: var(--sp-2);
+			}
+
+			.footer-copy {
+				font-family: var(--font-body);
+				font-size: 0.6875rem;
+				color: #9e8e85;
+				opacity: 0.4;
+			}
+
+			.footer-nav {
+				list-style: none;
+				display: flex;
+				flex-direction: column;
+				gap: var(--sp-1);
+			}
+
+			.footer-nav a {
+				font-family: var(--font-body);
+				font-size: 0.8125rem;
+				color: #9e8e85;
+				transition: color var(--transition-default);
+			}
+
+			.footer-nav a:hover {
+				color: #f3f4f3;
+			}
+
+			.footer-contact {
+				display: flex;
+				flex-direction: column;
+				gap: var(--sp-1);
+			}
+
+			.footer-contact-item {
+				font-family: var(--font-body);
+				font-size: 0.8125rem;
+				color: #9e8e85;
+			}
+
+			.footer-contact-item a {
+				transition: color var(--transition-default);
+			}
+
+			.footer-contact-item a:hover {
+				color: #f3f4f3;
+			}
+
+			.footer-linkedin {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				color: #9e8e85;
+				transition: color var(--transition-default);
+				margin-top: var(--sp-1);
+			}
+
+			.footer-linkedin:hover {
+				color: var(--color-accent);
+			}
+
+			.footer-linkedin svg {
+				width: 14px;
+				height: 14px;
+			}
+
+			/* ═══════════════════════════════════════
+       SCROLLBAR
+       ═══════════════════════════════════════ */
+			::-webkit-scrollbar {
+				width: 6px;
+			}
+
+			::-webkit-scrollbar-track {
+				background: var(--color-bg);
+			}
+
+			::-webkit-scrollbar-thumb {
+				background-color: var(--color-border);
+				border-radius: 3px;
+			}
+
+			::-webkit-scrollbar-thumb:hover {
+				background-color: var(--color-text-muted);
+			}
+
+			/* ═══════════════════════════════════════
+       FOCUS STATES
+       ═══════════════════════════════════════ */
+			*:focus-visible {
+				outline: 2px solid var(--color-accent);
+				outline-offset: 2px;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- ════════════════════════════════════════
+       1. NAV
+       ════════════════════════════════════════ -->
+		<header class="site-header">
+			<div class="container nav-inner">
+				<a href="#" class="wordmark" aria-label="Fractals — Home">FRACTALS</a>
+
+				<nav aria-label="Primary navigation">
+					<ul class="nav-links">
+						<li><a href="#services">Services</a></li>
+						<li><a href="#process">Process</a></li>
+						<li><a href="#stack">Stack</a></li>
+						<li><a href="#serve">Who We Serve</a></li>
+					</ul>
+				</nav>
+
+				<a href="#contact" class="nav-cta">Book a Consultation</a>
+
+				<button class="hamburger" aria-label="Open menu" aria-expanded="false">
+					<span></span>
+					<span></span>
+					<span></span>
+				</button>
+			</div>
+		</header>
+
+		<div class="mobile-overlay" aria-hidden="true"></div>
+		<nav class="mobile-drawer" aria-label="Mobile navigation">
+			<a href="#services">Services</a>
+			<a href="#process">Process</a>
+			<a href="#stack">Stack</a>
+			<a href="#serve">Who We Serve</a>
+			<a href="#contact" class="nav-cta-mobile">Book a Consultation</a>
+		</nav>
+
+		<main>
+			<!-- ════════════════════════════════════════
+         2. HERO
+         ════════════════════════════════════════ -->
+			<section class="hero" id="hero">
+				<div class="hero-bg-canvas" id="heroCanvas"></div>
+
+				<div class="hero-content">
+					<!-- AWS Partner Badge -->
+					<div class="aws-badge reveal">
+						<svg
+							width="20"
+							height="20"
+							viewBox="0 0 24 24"
+							fill="none"
+							aria-hidden="true"
+						>
+							<path
+								d="M13.74 4.23c-.84-.6-1.94-.88-3.04-.88-2.26 0-4.29 1.23-5.24 3.04-.14.28-.24.58-.34.88l-.02.08c-.06.22-.1.44-.14.68v.36c0 .12-.02.24-.02.36 0 3.48 2.84 6.32 6.32 6.32 1.1 0 2.2-.28 3.04-.88l.1-.08c.06-.04.1-.1.16-.14.72-.56 1.3-1.28 1.7-2.1.42-.84.64-1.78.64-2.76 0-.98-.22-1.92-.64-2.76-.4-.82-.98-1.54-1.7-2.1l-.16-.14-.1-.08z"
+								fill="var(--color-accent)"
+							/>
+							<path
+								d="M8.42 17.54c-1.14.64-2.26.94-3.28.94-.78 0-1.48-.16-2.14-.48a.32.32 0 01-.04-.56c.94-.66 2.88-1.02 4.38-.74.5.1 1.04.24 1.56.48.14.06.16.24.04.32l-.52.04z"
+								fill="var(--color-accent)"
+								opacity="0.6"
+							/>
+							<path
+								d="M19.88 17.54c-.62.48-1.38.78-2.08.96-.36.08-.72.14-1.1.14-.9 0-1.84-.28-2.62-.84-.08-.06-.04-.16.06-.14 1.32.2 3.42.66 4.54-.22.14-.1.28.02.2.1z"
+								fill="var(--color-accent)"
+								opacity="0.6"
+							/>
+						</svg>
+						<span class="aws-badge-text">AWS Consulting Partner</span>
+					</div>
+
+					<h1 class="hero-headline">
+						Cloud infrastructure and software, built from first principles.
+					</h1>
+
+					<p class="hero-sub">
+						We architect cloud systems and build production software for teams
+						that can't afford to get it wrong. No templates. No guesswork.
+					</p>
+
+					<div class="hero-ctas">
+						<a href="#services" class="btn-primary">What We Do</a>
+						<a href="#process" class="btn-arrow"
+							>How We Work <span class="arrow">→</span></a
+						>
+					</div>
+				</div>
+
+				<div class="hero-divider"></div>
+			</section>
+
+			<!-- ════════════════════════════════════════
+         3. SERVICES — "THE WORK"
+         ════════════════════════════════════════ -->
+			<section class="section-pad" id="services">
+				<div class="container">
+					<h2 class="section-title reveal">What We Do</h2>
+					<p class="section-subtitle reveal">
+						Cloud infrastructure, software engineering, and everything in
+						between.
+					</p>
+
+					<!-- Group 1: Architecture & Engineering -->
+					<div class="services-group">
+						<p class="services-group-label reveal">
+							Cloud Architecture &amp; Engineering
+						</p>
+						<div class="services-grid stagger">
+							<article class="svc-card svc-card--anchor reveal">
+								<h3 class="svc-card-title">
+									Cloud Architecture &amp; Migration
+								</h3>
+								<p class="svc-card-body">
+									This is the core of what we do. You tell us what your system
+									needs to handle, and we design the AWS infrastructure for it —
+									VPCs, accounts, networking, IaC, the whole thing. If you're
+									migrating off legacy, we'll assess what you have and build you
+									a path that doesn't require a six-month freeze.
+								</p>
+								<p class="svc-card-anchors">
+									VPC design, multi-account strategy, IaC (Terraform/CDK),
+									migration assessment.
+								</p>
+							</article>
+
+							<article class="svc-card reveal">
+								<h3 class="svc-card-title">Serverless Engineering</h3>
+								<p class="svc-card-body">
+									We've spent years inside Lambda. Not "we deployed a function
+									once" — we mean cold start tuning, concurrency reservations,
+									event source mapping quirks, the kind of things you only learn
+									by running serverless at scale. If your system needs to go
+									from zero to a million invocations and back, this is what we
+									do best.
+								</p>
+								<p class="svc-card-anchors">
+									Lambda, EventBridge, Step Functions, API Gateway.
+								</p>
+							</article>
+
+							<article class="svc-card reveal">
+								<h3 class="svc-card-title">
+									Containerisation &amp; Orchestration
+								</h3>
+								<p class="svc-card-body">
+									Not everything fits in a Lambda. Long-running jobs, stateful
+									workloads, teams that want container-level control — we set up
+									ECS and EKS clusters that are reproducible and auto-scaling.
+									The goal is that deploys are boring. Boring is good.
+								</p>
+								<p class="svc-card-anchors">
+									ECS Fargate, EKS, ECR, service mesh, task definitions, Helm
+									charts.
+								</p>
+							</article>
+
+							<article class="svc-card reveal">
+								<h3 class="svc-card-title">Data Engineering</h3>
+								<p class="svc-card-body">
+									Pipelines that run on time. Sounds simple, but most data
+									infrastructure we inherit is a mess of cron jobs and silent
+									failures. We build ingestion, transformation, and analytics
+									layers on AWS with proper lineage tracking, so when the
+									numbers look wrong, you can trace exactly why.
+								</p>
+								<p class="svc-card-anchors">
+									Kinesis, Glue, Redshift, Athena, Lake Formation, S3 data lake
+									architecture.
+								</p>
+							</article>
+
+							<article class="svc-card reveal">
+								<h3 class="svc-card-title">AI &amp; Intelligent Systems</h3>
+								<p class="svc-card-body">
+									Getting a demo working is easy. Getting AI into production —
+									with cost controls, observability, and an architecture your
+									team can actually maintain — is the hard part. That's where we
+									come in. Bedrock, SageMaker, or custom inference pipelines,
+									depending on what the problem actually needs.
+								</p>
+								<p class="svc-card-anchors">
+									Bedrock integration, RAG pipelines, vector store architecture,
+									inference cost optimisation.
+								</p>
+							</article>
+
+							<article class="svc-card reveal">
+								<h3 class="svc-card-title">DevOps &amp; CI/CD</h3>
+								<p class="svc-card-body">
+									Your deploy pipeline should be the most reliable thing in your
+									stack. We build CI/CD that's fast, predictable, and safe —
+									automated tests before merge, infra promotion through
+									environments, rollbacks that actually work. If your team is
+									scared to deploy on Fridays, something is broken.
+								</p>
+								<p class="svc-card-anchors">
+									GitHub Actions, CodePipeline, CodeBuild, GitOps workflows,
+									blue-green &amp; canary deployments.
+								</p>
+							</article>
+						</div>
+					</div>
+
+					<!-- Group 2: Operations & Assurance -->
+					<div class="services-group">
+						<p class="services-group-label reveal">
+							Operations &amp; Assurance
+						</p>
+						<div class="services-grid stagger">
+							<article class="svc-card svc-card--anchor reveal">
+								<h3 class="svc-card-title">Compliance &amp; Cloud Security</h3>
+								<p class="svc-card-body">
+									PCI-DSS, SOC 2, GDPR, CBN, NDPR — we've worked with all of
+									them. The trick is designing compliance into the architecture
+									from day one, not bolting it on at the end when the auditor
+									shows up. IAM policies, encryption, logging, regulatory
+									mapping. We think about this stuff early so you don't have to
+									redesign later.
+								</p>
+								<p class="svc-card-anchors">
+									IAM hardening, encryption at rest and in transit, audit
+									logging, regulatory mapping.
+								</p>
+							</article>
+
+							<article class="svc-card reveal">
+								<h3 class="svc-card-title">
+									Observability &amp; Incident Response
+								</h3>
+								<p class="svc-card-body">
+									Dashboards that look great in screenshots but don't help at 2
+									a.m. are useless. We instrument systems so that when things
+									break, your on-call knows what happened, where, and what to do
+									about it. Structured logs, distributed traces, alert routing
+									that doesn't cry wolf.
+								</p>
+								<p class="svc-card-anchors">
+									CloudWatch, X-Ray, OpenTelemetry, PagerDuty, structured
+									logging, runbook automation.
+								</p>
+							</article>
+
+							<article class="svc-card reveal">
+								<h3 class="svc-card-title">Cloud Cost Optimisation</h3>
+								<p class="svc-card-body">
+									Your AWS bill is a history of every decision made under
+									pressure. We go through it, find the waste, and fix it —
+									right-sizing, reserved capacity, lifecycle policies,
+									architectural changes where they make sense. Most clients see
+									25–40% savings in the first 90 days. The audit is free.
+								</p>
+								<p class="svc-card-anchors">
+									Cost Explorer analysis, Reserved Instance strategy,
+									right-sizing, S3 lifecycle policies.
+								</p>
+							</article>
+
+							<article class="svc-card reveal">
+								<h3 class="svc-card-title">Disaster Recovery</h3>
+								<p class="svc-card-body">
+									You probably have a DR plan somewhere. Has anyone tested it?
+									We design and actually test failover architectures —
+									multi-region, automated backups with verified restores,
+									runbooks your team can follow under real pressure. Hope is not
+									a strategy.
+								</p>
+								<p class="svc-card-anchors">
+									Multi-region failover, AWS Backup, pilot light &amp; warm
+									standby patterns, DR testing.
+								</p>
+							</article>
+
+							<article class="svc-card reveal">
+								<h3 class="svc-card-title">Managed Operations</h3>
+								<p class="svc-card-body">
+									After we build it, some teams want us to keep running it.
+									Monitoring, patching, cost reviews, incident response — the
+									operational work that's important but pulls your engineers
+									away from building product. We handle it with SLA-backed
+									response times.
+								</p>
+								<p class="svc-card-anchors">
+									24/7 monitoring, patch &amp; update management, cost reviews,
+									SLA-backed response times.
+								</p>
+							</article>
+
+							<article class="svc-card reveal">
+								<h3 class="svc-card-title">Training &amp; Enablement</h3>
+								<p class="svc-card-body">
+									We don't build things your team can't own. Every engagement
+									includes knowledge transfer, but some teams want more. We run
+									workshops on IaC, security, architecture patterns — practical
+									stuff your engineers will actually use, not certification
+									prep.
+								</p>
+								<p class="svc-card-anchors">
+									Architecture walkthroughs, IaC workshops, security best
+									practices, team-specific curriculum.
+								</p>
+							</article>
+						</div>
+					</div>
+
+					<!-- Group 3: Software Development -->
+					<div class="services-group">
+						<p class="services-group-label reveal">Software Development</p>
+						<div class="services-grid stagger">
+							<article class="svc-card svc-card--anchor reveal">
+								<h3 class="svc-card-title">Backend Engineering</h3>
+								<p class="svc-card-body">
+									APIs, microservices, event-driven systems — we write the code
+									that runs behind your product. Not prototype code, production
+									code. Properly structured, tested, documented, and built to
+									handle real traffic from day one. We work in Python, Node.js,
+									TypeScript, and C#/.NET depending on what your stack needs.
+								</p>
+								<p class="svc-card-anchors">
+									REST &amp; GraphQL APIs, microservices, event-driven
+									architecture, database design, message queues.
+								</p>
+							</article>
+
+							<article class="svc-card reveal">
+								<h3 class="svc-card-title">Full-Stack Product Engineering</h3>
+								<p class="svc-card-body">
+									Sometimes you don't just need infrastructure — you need the
+									whole product built. We take features from design through to
+									deployed, production-ready code. Frontend, backend, database,
+									deployment pipeline, the lot. Particularly useful for teams
+									that are strong on product but need senior engineering
+									capacity.
+								</p>
+								<p class="svc-card-anchors">
+									React, Next.js, Node.js, Python, PostgreSQL, end-to-end
+									feature delivery.
+								</p>
+							</article>
+
+							<article class="svc-card reveal">
+								<h3 class="svc-card-title">API Design &amp; Integration</h3>
+								<p class="svc-card-body">
+									Third-party integrations, payment gateways, banking APIs,
+									webhook systems — the connective tissue between your product
+									and everything else. We've integrated with Paystack,
+									Flutterwave, Stripe, Zendesk, Slack, and dozens of other
+									platforms. We know where the documentation lies to you.
+								</p>
+								<p class="svc-card-anchors">
+									API design, third-party integrations, webhooks, OAuth flows,
+									rate limiting, retry logic.
+								</p>
+							</article>
+
+							<article class="svc-card reveal">
+								<h3 class="svc-card-title">Legacy System Modernisation</h3>
+								<p class="svc-card-body">
+									That monolith you're scared to touch? We've refactored plenty
+									of them. We break legacy systems apart incrementally —
+									strangler fig pattern, not big-bang rewrites. Your system
+									keeps running while we modernise it underneath. No six-month
+									feature freeze required.
+								</p>
+								<p class="svc-card-anchors">
+									Strangler fig migration, monolith decomposition, database
+									modernisation, incremental rewrites.
+								</p>
+							</article>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ════════════════════════════════════════
+         4. PROCESS
+         ════════════════════════════════════════ -->
+			<section class="section-pad" id="process">
+				<div class="container">
+					<h2 class="section-title reveal">How It Works</h2>
+					<p class="process-intro reveal">
+						We don't start with a proposal. We start with your problem.
+					</p>
+
+					<div class="process-timeline stagger">
+						<div class="phase reveal">
+							<p class="phase-number">Phase 01</p>
+							<h3 class="phase-name">Discovery</h3>
+							<p class="phase-desc">
+								We look at what you have, talk to your engineers, and figure out
+								where you're going. No pitch. No premade solution waiting in a
+								drawer. The output is a written brief — a shared picture of the
+								problem that both sides agree on before anything else happens.
+							</p>
+						</div>
+
+						<div class="phase reveal">
+							<p class="phase-number">Phase 02</p>
+							<h3 class="phase-name">Architecture</h3>
+							<p class="phase-desc">
+								We design the whole system before anyone writes code. ADRs, data
+								flow diagrams, cost projections, security threat model — all of
+								it. You review it, push back where you disagree, and approve
+								before we move forward. Non-negotiable.
+							</p>
+						</div>
+
+						<div class="phase reveal">
+							<p class="phase-number">Phase 03</p>
+							<h3 class="phase-name">Build &amp; Migrate</h3>
+							<p class="phase-desc">
+								We execute against the agreed architecture. Weekly updates. All
+								code reviewed. Everything in Terraform or CDK — no one is
+								clicking through the console. You own the repo from day one.
+							</p>
+						</div>
+
+						<div class="phase reveal">
+							<p class="phase-number">Phase 04</p>
+							<h3 class="phase-name">Handoff</h3>
+							<p class="phase-desc">
+								Runbooks, dashboards, walkthroughs with your team. The goal is
+								simple: your engineers should be able to own, debug, and extend
+								everything we built from the day we hand it over. If they can't,
+								we haven't finished.
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ════════════════════════════════════════
+         5. STACK
+         ════════════════════════════════════════ -->
+			<section class="section-pad" id="stack">
+				<div class="container">
+					<h2 class="section-title reveal">The Tools We Work With</h2>
+
+					<div class="stack-badges stagger reveal">
+						<span class="badge">AWS Lambda</span>
+						<span class="badge">Amazon DynamoDB</span>
+						<span class="badge">AWS EventBridge</span>
+						<span class="badge">Amazon Bedrock</span>
+						<span class="badge">AWS Step Functions</span>
+						<span class="badge">Amazon Kinesis</span>
+						<span class="badge">Amazon RDS</span>
+						<span class="badge">Amazon S3</span>
+						<span class="badge">AWS Secrets Manager</span>
+						<span class="badge">Amazon CloudWatch</span>
+						<span class="badge">AWS X-Ray</span>
+						<span class="badge">AWS CDK</span>
+						<span class="badge">Amazon ECS</span>
+						<span class="badge">Amazon EKS</span>
+						<span class="badge">AWS Glue</span>
+						<span class="badge">Amazon Redshift</span>
+						<span class="badge">Amazon SQS</span>
+						<span class="badge">Amazon SNS</span>
+						<span class="badge">AWS CloudFormation</span>
+						<span class="badge">Amazon API Gateway</span>
+						<span class="badge">Terraform</span>
+						<span class="badge">Python</span>
+						<span class="badge">Node.js</span>
+						<span class="badge">TypeScript</span>
+						<span class="badge">C# / .NET</span>
+						<span class="badge">React</span>
+						<span class="badge">Next.js</span>
+						<span class="badge">PostgreSQL</span>
+						<span class="badge">MongoDB</span>
+						<span class="badge">Redis</span>
+						<span class="badge">GraphQL</span>
+						<span class="badge">GitHub Actions</span>
+						<span class="badge">Docker</span>
+						<span class="badge">Snowflake</span>
+						<span class="badge">OpenTelemetry</span>
+						<span class="badge">PagerDuty</span>
+						<span class="badge">Datadog</span>
+					</div>
+
+					<p class="stack-note reveal">
+						We pick the right tool for the job, not the one we used last time.
+						If something cheaper or simpler works better, we'll tell you.
+					</p>
+				</div>
+			</section>
+
+			<!-- ════════════════════════════════════════
+         6. WHO WE SERVE
+         ════════════════════════════════════════ -->
+			<section class="section-pad" id="serve">
+				<div class="container">
+					<div class="reveal">
+						<p class="manifesto-text">
+							There are a lot of cloud consultancies. Most of them will say yes
+							to anything and figure it out later. We'd rather be honest about
+							what we're good at:
+							<span class="accent-phrase"
+								>hard infrastructure and engineering problems</span
+							>
+							for teams in regulated, high-stakes industries. Our office is in
+							Lagos. Our clients are everywhere.
+						</p>
+					</div>
+
+					<div class="verticals stagger">
+						<div class="vertical-tile reveal">
+							<h3 class="vertical-name">Fintech</h3>
+							<p class="vertical-desc">
+								Payment rails, wallet systems, real-time settlement. The layer
+								where milliseconds are money and downtime is front-page news.
+							</p>
+						</div>
+
+						<div class="vertical-tile reveal">
+							<h3 class="vertical-name">Banking</h3>
+							<p class="vertical-desc">
+								Core banking migration, regulatory architecture, legacy
+								modernisation. We know what the auditors are going to ask before
+								they ask it.
+							</p>
+						</div>
+
+						<div class="vertical-tile reveal">
+							<h3 class="vertical-name">Telecoms</h3>
+							<p class="vertical-desc">
+								Subscriber data at high throughput, event-driven billing,
+								network analytics. Systems that need to handle millions of
+								events without dropping anything.
+							</p>
+						</div>
+
+						<div class="vertical-tile reveal">
+							<h3 class="vertical-name">Insurance</h3>
+							<p class="vertical-desc">
+								Policy management, claims automation, actuarial pipelines,
+								regulatory reporting. Lots of data, lots of rules, zero
+								tolerance for getting it wrong.
+							</p>
+						</div>
+
+						<div class="vertical-tile reveal">
+							<h3 class="vertical-name">Enterprise &amp; SaaS</h3>
+							<p class="vertical-desc">
+								Multi-tenant platforms, B2B product infrastructure, the kind of
+								systems where one customer's bad query shouldn't take down
+								everyone else.
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- ════════════════════════════════════════
+         7. CREDENTIALS
+         ════════════════════════════════════════ -->
+			<section class="section-pad" id="credentials">
+				<div class="container">
+					<h2 class="section-title reveal">Credentials</h2>
+					<p class="section-subtitle reveal">
+						The short version of why you should trust us.
+					</p>
+
+					<div class="cred-grid stagger">
+						<article class="cred-card reveal">
+							<h3 class="cred-card-title">AWS Consulting Partner</h3>
+							<p class="cred-card-body">
+								We're in the AWS Partner Network. That means AWS has vetted our
+								technical capabilities and our ability to deliver. It's not a
+								badge you just sign up for.
+							</p>
+						</article>
+
+						<article class="cred-card reveal">
+							<h3 class="cred-card-title">AWS Financial Services Competency</h3>
+							<p class="cred-card-tag">In Progress</p>
+							<p class="cred-card-body">
+								We're working toward this designation. It requires documented
+								proof that you've delivered production-grade,
+								regulation-compliant architecture in financial services. We're
+								building that case.
+							</p>
+						</article>
+
+						<article class="cred-card reveal">
+							<h3 class="cred-card-title">Lambda Service Delivery</h3>
+							<p class="cred-card-body">
+								Recognised by AWS for deep Lambda expertise. We've built and run
+								serverless systems processing millions of invocations per day —
+								not as experiments, but as production infrastructure that real
+								businesses depend on.
+							</p>
+						</article>
+					</div>
+				</div>
+			</section>
+
+			<!-- ════════════════════════════════════════
+         8. CTA / CONTACT
+         ════════════════════════════════════════ -->
+			<section class="cta-section section-pad" id="contact">
+				<div class="container">
+					<div class="cta-inner">
+						<div class="reveal">
+							<h2 class="cta-headline">Book a Consultation</h2>
+							<p class="cta-sub">
+								Tell us what you're working on. We'll get back to you within one
+								business day — with a straight answer about whether we can help
+								and what that would look like.
+							</p>
+
+							<div class="cta-detail">
+								<div class="cta-detail-item">
+									<!-- Mail icon -->
+									<svg
+										class="cta-detail-icon"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="1.5"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<rect x="2" y="4" width="20" height="16" rx="2" />
+										<path d="M22 4L12 13 2 4" />
+									</svg>
+									<p class="cta-detail-text">
+										<a href="mailto:hello@fractalstech.com"
+											>hello@fractalstech.com</a
+										>
+									</p>
+								</div>
+
+								<div class="cta-detail-item">
+									<!-- Location icon -->
+									<svg
+										class="cta-detail-icon"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="1.5"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										aria-hidden="true"
+									>
+										<path
+											d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+										/>
+										<circle cx="12" cy="9" r="2.5" />
+									</svg>
+									<p class="cta-detail-text">
+										Headquartered in Lagos · Available globally
+									</p>
+								</div>
+
+								<div class="cta-detail-item">
+									<!-- LinkedIn icon -->
+									<svg
+										class="cta-detail-icon"
+										viewBox="0 0 24 24"
+										fill="currentColor"
+										aria-hidden="true"
+									>
+										<path
+											d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+										/>
+									</svg>
+									<p class="cta-detail-text">
+										<a
+											href="https://www.linkedin.com/company/fractals-limited"
+											target="_blank"
+											rel="noopener noreferrer"
+											>Follow our work on LinkedIn</a
+										>
+									</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="reveal">
+							<div class="consult-form" id="consultForm">
+								<div class="form-row form-row--half">
+									<div class="form-field">
+										<label class="form-label" for="consult-name"
+											>Full Name</label
+										>
+										<input
+											class="form-input"
+											type="text"
+											id="consult-name"
+											name="name"
+											placeholder="Jane Doe"
+											required
+											autocomplete="name"
+										/>
+									</div>
+									<div class="form-field">
+										<label class="form-label" for="consult-email"
+											>Work Email</label
+										>
+										<input
+											class="form-input"
+											type="email"
+											id="consult-email"
+											name="email"
+											placeholder="jane@company.com"
+											required
+											autocomplete="email"
+										/>
+									</div>
+								</div>
+
+								<div class="form-row form-row--half">
+									<div class="form-field">
+										<label class="form-label" for="consult-company"
+											>Company</label
+										>
+										<input
+											class="form-input"
+											type="text"
+											id="consult-company"
+											name="company"
+											placeholder="Company name"
+											autocomplete="organization"
+										/>
+									</div>
+									<div class="form-field">
+										<label class="form-label" for="consult-service"
+											>What Do You Need?</label
+										>
+										<select
+											class="form-select"
+											id="consult-service"
+											name="service"
+										>
+											<option value="" disabled selected>
+												Select a service area
+											</option>
+											<optgroup label="Cloud Architecture &amp; Engineering">
+												<option value="architecture">
+													Cloud Architecture &amp; Migration
+												</option>
+												<option value="serverless">
+													Serverless Engineering
+												</option>
+												<option value="containers">
+													Containerisation &amp; Orchestration
+												</option>
+												<option value="data">Data Engineering</option>
+												<option value="ai">AI &amp; Intelligent Systems</option>
+												<option value="devops">DevOps &amp; CI/CD</option>
+											</optgroup>
+											<optgroup label="Software Development">
+												<option value="backend">Backend Engineering</option>
+												<option value="fullstack">
+													Full-Stack Product Engineering
+												</option>
+												<option value="api">
+													API Design &amp; Integration
+												</option>
+												<option value="legacy">
+													Legacy System Modernisation
+												</option>
+											</optgroup>
+											<optgroup label="Operations &amp; Assurance">
+												<option value="compliance">
+													Compliance &amp; Cloud Security
+												</option>
+												<option value="observability">
+													Observability &amp; Incident Response
+												</option>
+												<option value="cost">Cloud Cost Optimisation</option>
+												<option value="dr">
+													Disaster Recovery &amp; Business Continuity
+												</option>
+												<option value="managed">
+													Managed Cloud Operations
+												</option>
+												<option value="training">
+													Training &amp; Enablement
+												</option>
+											</optgroup>
+											<option value="other">Something else</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-field">
+										<label class="form-label" for="consult-message"
+											>Tell Us More</label
+										>
+										<textarea
+											class="form-textarea"
+											id="consult-message"
+											name="message"
+											placeholder="What are you building? Where are you stuck? Even a few sentences helps us give you a better first response."
+										></textarea>
+									</div>
+								</div>
+
+								<button type="button" class="form-submit" id="consultSubmit">
+									Book Consultation <span class="arrow">→</span>
+								</button>
+								<p class="form-note">
+									No commitment, no sales pitch. Just a conversation.
+								</p>
+							</div>
+
+							<div class="form-success" id="consultSuccess">
+								<h3 class="form-success-title">Got it. We'll be in touch.</h3>
+								<p class="form-success-text">
+									Someone on our team will review what you've shared and reply
+									within one business day. Not a template — an actual response
+									to what you told us.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<!-- ════════════════════════════════════════
+       FOOTER
+       ════════════════════════════════════════ -->
+		<div class="footer-accent-line"></div>
+		<footer class="site-footer">
+			<div class="container">
+				<div class="footer-inner">
+					<div>
+						<p class="footer-wordmark">FRACTALS</p>
+						<p class="footer-tagline">
+							Cloud consultancy &amp; software engineering.
+						</p>
+						<p class="footer-copy">© 2025 Fractals. All rights reserved.</p>
+					</div>
+
+					<nav aria-label="Footer navigation">
+						<ul class="footer-nav">
+							<li><a href="#services">Services</a></li>
+							<li><a href="#process">Process</a></li>
+							<li><a href="#stack">Stack</a></li>
+							<li><a href="#serve">Who We Serve</a></li>
+							<li><a href="#contact">Contact</a></li>
+						</ul>
+					</nav>
+
+					<div class="footer-contact">
+						<p class="footer-contact-item">
+							<a href="mailto:hello@fractalstech.com">hello@fractalstech.com</a>
+						</p>
+						<p class="footer-contact-item">
+							Lagos, Nigeria · Available globally
+						</p>
+						<a
+							href="https://www.linkedin.com/company/fractals-limited"
+							class="footer-linkedin"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+								<path
+									d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+								/>
+							</svg>
+							<span>LinkedIn</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<!-- ════════════════════════════════════════
+       JAVASCRIPT
+       ════════════════════════════════════════ -->
+		<script>
+			;(function () {
+				"use strict"
+
+				// ── 2D Voronoi Mesh ──
+				var heroContainer = document.getElementById("heroCanvas")
+				if (heroContainer) {
+					var canvas = document.createElement("canvas")
+					canvas.style.cssText =
+						"width:100%;height:100%;position:absolute;inset:0;"
+					heroContainer.appendChild(canvas)
+					var ctx = canvas.getContext("2d")
+
+					var W, H, dpr
+					function resize() {
+						dpr = Math.min(window.devicePixelRatio, 2)
+						W = heroContainer.offsetWidth
+						H = heroContainer.offsetHeight
+						canvas.width = W * dpr
+						canvas.height = H * dpr
+						ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+					}
+					resize()
+
+					// Seed points — more for full-width coverage
+					var NUM_SEEDS = 70
+					var seeds = []
+					var PAD = 60 // overflow beyond canvas edges
+					for (var i = 0; i < NUM_SEEDS; i++) {
+						seeds.push({
+							x: -PAD + Math.random() * (W + PAD * 2),
+							y: -PAD + Math.random() * (H + PAD * 2),
+							vx: (Math.random() - 0.5) * 0.3,
+							vy: (Math.random() - 0.5) * 0.3,
+							ox: 0,
+							oy: 0, // original for drift base
+						})
+						seeds[i].ox = seeds[i].x
+						seeds[i].oy = seeds[i].y
+					}
+
+					// Mouse tracking
+					var mouse = { x: -9999, y: -9999, active: false }
+					canvas.addEventListener("mousemove", function (e) {
+						var rect = canvas.getBoundingClientRect()
+						mouse.x = e.clientX - rect.left
+						mouse.y = e.clientY - rect.top
+						mouse.active = true
+					})
+					canvas.addEventListener("mouseleave", function () {
+						mouse.active = false
+					})
+					canvas.addEventListener(
+						"touchmove",
+						function (e) {
+							var rect = canvas.getBoundingClientRect()
+							mouse.x = e.touches[0].clientX - rect.left
+							mouse.y = e.touches[0].clientY - rect.top
+							mouse.active = true
+						},
+						{ passive: true },
+					)
+					canvas.addEventListener("touchend", function () {
+						mouse.active = false
+					})
+
+					// ── Bowyer-Watson Delaunay triangulation ──
+					function circumcircle(ax, ay, bx, by, cx, cy) {
+						var D = 2 * (ax * (by - cy) + bx * (cy - ay) + cx * (ay - by))
+						if (Math.abs(D) < 1e-10) return { x: 0, y: 0, r: Infinity }
+						var a2 = ax * ax + ay * ay
+						var b2 = bx * bx + by * by
+						var c2 = cx * cx + cy * cy
+						var ux = (a2 * (by - cy) + b2 * (cy - ay) + c2 * (ay - by)) / D
+						var uy = (a2 * (cx - bx) + b2 * (ax - cx) + c2 * (bx - ax)) / D
+						var dx = ax - ux,
+							dy = ay - uy
+						return { x: ux, y: uy, r: Math.sqrt(dx * dx + dy * dy) }
+					}
+
+					function delaunay(points) {
+						// Super-triangle
+						var minX = -PAD * 3,
+							minY = -PAD * 3
+						var maxX = W + PAD * 3,
+							maxY = H + PAD * 3
+						var dx = maxX - minX,
+							dy = maxY - minY
+						var dmax = Math.max(dx, dy) * 2
+
+						var p0 = { x: minX - dmax, y: minY - dmax }
+						var p1 = { x: minX + dmax * 3, y: minY - dmax }
+						var p2 = { x: minX, y: minY + dmax * 3 }
+
+						var superIdx = points.length
+						var allPts = points.concat([p0, p1, p2])
+
+						var triangles = [{ a: superIdx, b: superIdx + 1, c: superIdx + 2 }]
+
+						// Pre-compute circumcircles
+						var circles = [circumcircle(p0.x, p0.y, p1.x, p1.y, p2.x, p2.y)]
+
+						for (var i = 0; i < points.length; i++) {
+							var px = points[i].x,
+								py = points[i].y
+							var bad = []
+							var edgeMap = {}
+
+							for (var j = triangles.length - 1; j >= 0; j--) {
+								var cc = circles[j]
+								if (cc.r === Infinity) continue
+								var ddx = px - cc.x,
+									ddy = py - cc.y
+								if (ddx * ddx + ddy * ddy <= cc.r * cc.r + 1e-6) {
+									bad.push(j)
+								}
+							}
+
+							// Collect boundary edges
+							var edges = []
+							for (var k = 0; k < bad.length; k++) {
+								var t = triangles[bad[k]]
+								edges.push([t.a, t.b], [t.b, t.c], [t.c, t.a])
+							}
+
+							// Find edges that appear only once (boundary of the hole)
+							var boundary = []
+							for (var k = 0; k < edges.length; k++) {
+								var e = edges[k]
+								var eMin = Math.min(e[0], e[1])
+								var eMax = Math.max(e[0], e[1])
+								var key = eMin + "," + eMax
+								var shared = false
+								for (var m = 0; m < edges.length; m++) {
+									if (m === k) continue
+									var f = edges[m]
+									var fMin = Math.min(f[0], f[1])
+									var fMax = Math.max(f[0], f[1])
+									if (fMin === eMin && fMax === eMax) {
+										shared = true
+										break
+									}
+								}
+								if (!shared) boundary.push(e)
+							}
+
+							// Remove bad triangles (in reverse order)
+							bad.sort(function (a, b) {
+								return b - a
+							})
+							for (var k = 0; k < bad.length; k++) {
+								triangles.splice(bad[k], 1)
+								circles.splice(bad[k], 1)
+							}
+
+							// Create new triangles
+							for (var k = 0; k < boundary.length; k++) {
+								var e = boundary[k]
+								var newT = { a: e[0], b: e[1], c: i }
+								triangles.push(newT)
+								var pa = allPts[e[0]],
+									pb = allPts[e[1]],
+									pc = allPts[i]
+								circles.push(circumcircle(pa.x, pa.y, pb.x, pb.y, pc.x, pc.y))
+							}
+						}
+
+						// Remove triangles with super-triangle vertices
+						var result = []
+						for (var j = 0; j < triangles.length; j++) {
+							var t = triangles[j]
+							if (t.a >= superIdx || t.b >= superIdx || t.c >= superIdx)
+								continue
+							result.push(t)
+						}
+
+						return { triangles: result, circles: circles, allPts: allPts }
+					}
+
+					// Extract Voronoi edges from Delaunay
+					function voronoiEdges(triangles, points) {
+						// Build adjacency: for each edge, which triangles share it
+						var edgeTriMap = {}
+						var triCircles = []
+
+						for (var i = 0; i < triangles.length; i++) {
+							var t = triangles[i]
+							var pa = points[t.a],
+								pb = points[t.b],
+								pc = points[t.c]
+							triCircles.push(circumcircle(pa.x, pa.y, pb.x, pb.y, pc.x, pc.y))
+
+							var edges = [
+								[Math.min(t.a, t.b), Math.max(t.a, t.b)],
+								[Math.min(t.b, t.c), Math.max(t.b, t.c)],
+								[Math.min(t.a, t.c), Math.max(t.a, t.c)],
+							]
+							for (var k = 0; k < 3; k++) {
+								var key = edges[k][0] + "," + edges[k][1]
+								if (!edgeTriMap[key]) edgeTriMap[key] = []
+								edgeTriMap[key].push(i)
+							}
+						}
+
+						var voroEdges = []
+						var keys = Object.keys(edgeTriMap)
+						for (var i = 0; i < keys.length; i++) {
+							var tris = edgeTriMap[keys[i]]
+							if (tris.length === 2) {
+								var c1 = triCircles[tris[0]]
+								var c2 = triCircles[tris[1]]
+								if (c1.r < 1e6 && c2.r < 1e6) {
+									voroEdges.push({ x1: c1.x, y1: c1.y, x2: c2.x, y2: c2.y })
+								}
+							}
+						}
+
+						return { edges: voroEdges, vertices: triCircles }
+					}
+
+					// ── Draw ──
+					function draw() {
+						ctx.clearRect(0, 0, W, H)
+
+						var d = delaunay(seeds)
+						var v = voronoiEdges(d.triangles, seeds)
+
+						// Draw edges
+						ctx.lineWidth = 1.2
+						for (var i = 0; i < v.edges.length; i++) {
+							var e = v.edges[i]
+							// Fade edges that are far from center
+							var mx = (e.x1 + e.x2) * 0.5
+							var my = (e.y1 + e.y2) * 0.5
+							var distFromCenter = Math.sqrt(
+								Math.pow(mx - W * 0.5, 2) + Math.pow(my - H * 0.5, 2),
+							)
+							var maxDist = Math.sqrt(W * W + H * H) * 0.65
+							var fade = Math.max(0, 1 - distFromCenter / maxDist)
+							var opacity = 0.06 + fade * 0.16
+
+							// Brighten edges near mouse
+							if (mouse.active) {
+								var dm = Math.sqrt(
+									Math.pow(mx - mouse.x, 2) + Math.pow(my - mouse.y, 2),
+								)
+								if (dm < 150) {
+									opacity += (1 - dm / 150) * 0.35
+								}
+							}
+
+							ctx.strokeStyle = "rgba(145, 23, 31, " + opacity + ")"
+							ctx.beginPath()
+							ctx.moveTo(e.x1, e.y1)
+							ctx.lineTo(e.x2, e.y2)
+							ctx.stroke()
+						}
+
+						// Draw Voronoi vertices as tiny dots
+						for (var i = 0; i < v.vertices.length; i++) {
+							var vt = v.vertices[i]
+							if (
+								vt.r > 1e6 ||
+								vt.x < -PAD ||
+								vt.x > W + PAD ||
+								vt.y < -PAD ||
+								vt.y > H + PAD
+							)
+								continue
+							var distFromCenter = Math.sqrt(
+								Math.pow(vt.x - W * 0.5, 2) + Math.pow(vt.y - H * 0.5, 2),
+							)
+							var maxDist = Math.sqrt(W * W + H * H) * 0.65
+							var fade = Math.max(0, 1 - distFromCenter / maxDist)
+							if (fade < 0.05) continue
+
+							var dotOpacity = 0.1 + fade * 0.18
+
+							// Brighten near mouse
+							if (mouse.active) {
+								var dm = Math.sqrt(
+									Math.pow(vt.x - mouse.x, 2) + Math.pow(vt.y - mouse.y, 2),
+								)
+								if (dm < 150) {
+									dotOpacity += (1 - dm / 150) * 0.5
+								}
+							}
+
+							ctx.fillStyle = "rgba(145, 23, 31, " + dotOpacity + ")"
+							ctx.beginPath()
+							ctx.arc(vt.x, vt.y, 2.5, 0, Math.PI * 2)
+							ctx.fill()
+						}
+					}
+
+					// ── Animate ──
+					var time = 0
+					function animate() {
+						requestAnimationFrame(animate)
+						time += 0.016
+
+						// Drift seeds slowly
+						for (var i = 0; i < seeds.length; i++) {
+							var s = seeds[i]
+							s.x =
+								s.ox +
+								Math.sin(time * s.vx * 2 + i) * 30 +
+								Math.sin(time * 0.1 + i * 0.7) * 15
+							s.y =
+								s.oy +
+								Math.cos(time * s.vy * 2 + i * 1.3) * 25 +
+								Math.cos(time * 0.08 + i * 0.5) * 12
+
+							// Mouse repulsion
+							if (mouse.active) {
+								var dx = s.x - mouse.x
+								var dy = s.y - mouse.y
+								var dist = Math.sqrt(dx * dx + dy * dy)
+								var radius = 120
+								if (dist < radius && dist > 0) {
+									var force = (1 - dist / radius) * 35
+									s.x += (dx / dist) * force
+									s.y += (dy / dist) * force
+								}
+							}
+						}
+
+						draw()
+					}
+					animate()
+
+					// Resize handler
+					var resizeTimeout
+					window.addEventListener("resize", function () {
+						clearTimeout(resizeTimeout)
+						resizeTimeout = setTimeout(function () {
+							if (heroContainer.offsetWidth > 0) {
+								resize()
+								// Redistribute seeds for new dimensions
+								for (var i = 0; i < seeds.length; i++) {
+									seeds[i].ox = -PAD + Math.random() * (W + PAD * 2)
+									seeds[i].oy = -PAD + Math.random() * (H + PAD * 2)
+								}
+							}
+						}, 200)
+					})
+				}
+
+				var revealElements = document.querySelectorAll(".reveal")
+
+				if (!("IntersectionObserver" in window)) {
+					// Fallback: show everything
+					revealElements.forEach(function (el) {
+						el.classList.add("visible")
+					})
+					return
+				}
+
+				var observer = new IntersectionObserver(
+					function (entries) {
+						entries.forEach(function (entry) {
+							if (entry.isIntersecting) {
+								entry.target.classList.add("visible")
+								observer.unobserve(entry.target)
+							}
+						})
+					},
+					{
+						threshold: 0.1,
+						rootMargin: "0px 0px -40px 0px",
+					},
+				)
+
+				revealElements.forEach(function (el) {
+					observer.observe(el)
+				})
+
+				// Mobile nav
+				var hamburger = document.querySelector(".hamburger")
+				var drawer = document.querySelector(".mobile-drawer")
+				var overlay = document.querySelector(".mobile-overlay")
+				var drawerLinks = drawer.querySelectorAll("a")
+
+				function toggleMenu() {
+					var isOpen = drawer.classList.contains("open")
+					drawer.classList.toggle("open")
+					overlay.classList.toggle("open")
+					hamburger.classList.toggle("active")
+					hamburger.setAttribute("aria-expanded", !isOpen)
+					document.body.style.overflow = isOpen ? "" : "hidden"
+				}
+
+				function closeMenu() {
+					drawer.classList.remove("open")
+					overlay.classList.remove("open")
+					hamburger.classList.remove("active")
+					hamburger.setAttribute("aria-expanded", "false")
+					document.body.style.overflow = ""
+				}
+
+				hamburger.addEventListener("click", toggleMenu)
+				overlay.addEventListener("click", closeMenu)
+				drawerLinks.forEach(function (link) {
+					link.addEventListener("click", closeMenu)
+				})
+
+				// Close on Escape key
+				document.addEventListener("keydown", function (e) {
+					if (e.key === "Escape" && drawer.classList.contains("open")) {
+						closeMenu()
+					}
+				})
+
+				// ── Consultation form ──
+				var consultForm = document.getElementById("consultForm")
+				var consultSubmit = document.getElementById("consultSubmit")
+				var consultSuccess = document.getElementById("consultSuccess")
+				var nameInput = document.getElementById("consult-name")
+				var emailInput = document.getElementById("consult-email")
+
+				function validateEmail(email) {
+					return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+				}
+
+				consultSubmit.addEventListener("click", function () {
+					// Basic validation
+					var name = nameInput.value.trim()
+					var email = emailInput.value.trim()
+
+					if (!name) {
+						nameInput.focus()
+						nameInput.style.borderColor = "var(--color-accent)"
+						return
+					}
+
+					if (!email || !validateEmail(email)) {
+						emailInput.focus()
+						emailInput.style.borderColor = "var(--color-accent)"
+						return
+					}
+
+					/*
+					 * ──────────────────────────────────────────
+					 * INTEGRATION POINT
+					 * Replace this block with your form backend:
+					 * - Formspree: fetch('https://formspree.io/f/YOUR_ID', ...)
+					 * - AWS API Gateway + Lambda + SES
+					 * - Any POST endpoint that accepts JSON
+					 *
+					 * The form fields are:
+					 *   name, email, company, service, message
+					 * ──────────────────────────────────────────
+					 */
+
+					// Show success state
+					consultForm.style.display = "none"
+					consultSuccess.classList.add("visible")
+				})
+
+				// Reset border color on input focus
+				;[nameInput, emailInput].forEach(function (input) {
+					input.addEventListener("focus", function () {
+						this.style.borderColor = ""
+					})
+				})
+			})()
+		</script>
+	</body>
+</html>
