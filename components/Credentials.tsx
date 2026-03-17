@@ -2,43 +2,22 @@ export function Credentials() {
 	return (
 		<section className="section-pad" id="credentials">
 			<div className="container">
-				<h2 className="section-title reveal">Credentials</h2>
-				<p className="section-subtitle reveal">
-					The short version of why you should trust us.
-				</p>
-
+				<h2 className="section-title reveal">Certified Badges</h2>
+				
 				<div className="cred-grid stagger">
-					<article className="cred-card reveal">
-						<h3 className="cred-card-title">AWS Consulting Partner</h3>
-						<p className="cred-card-body">
-							We&apos;re in the AWS Partner Network. That means AWS has vetted
-							our technical capabilities and our ability to deliver. It&apos;s
-							not a badge you just sign up for.
-						</p>
-					</article>
-
-					<article className="cred-card reveal">
-						<h3 className="cred-card-title">
-							AWS Financial Services Competency
-						</h3>
-						<p className="cred-card-tag">In Progress</p>
-						<p className="cred-card-body">
-							We&apos;re working toward this designation. It requires documented
-							proof that you&apos;ve delivered production-grade,
-							regulation-compliant architecture in financial services. We&apos;re
-							building that case.
-						</p>
-					</article>
-
-					<article className="cred-card reveal">
-						<h3 className="cred-card-title">Lambda Service Delivery</h3>
-						<p className="cred-card-body">
-							Recognised by AWS for deep Lambda expertise. We&apos;ve built and
-							run serverless systems processing millions of invocations per day —
-							not as experiments, but as production infrastructure that real
-							businesses depend on.
-						</p>
-					</article>
+					{[
+						{ name: "AWS Solution Architect Professional", file: "AWS Solution Architect Professional.png" },
+						{ name: "AWS Devops Engineer", file: "AWS Devops Engineer.png" },
+						{ name: "AWS Solution Architect Associate", file: "AWS Solution Architect Associate.png" },
+						{ name: "AWS Developer Associate", file: "AWS Developer Associate.png" },
+						{ name: "Azure Solutions Architect", file: "Azure Solutions Architect.png" },
+						{ name: "Azure Administrator", file: "Azure Administrator.png" },
+					].map((badge) => (
+						<article className="cred-card reveal" key={badge.name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+							<img src={`/${badge.file}`} alt={badge.name} width="330" height="330" style={{ objectFit: 'contain', marginBottom: '1rem' }} />
+							<h3 className="cred-card-title">{badge.name}</h3>
+						</article>
+					))}
 				</div>
 			</div>
 		</section>
