@@ -33,8 +33,9 @@ export function Header() {
 		<>
 			<header className="site-header">
 				<div className="container nav-inner">
-					<a href="#" className="wordmark" aria-label="Fractals — Home">
-						FRACTALS
+					<a href="#" aria-label="Fractals — Home" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+						<img src="/fractal logo.svg" alt="Fractals Logo" width="32" height="48" style={{ objectFit: 'contain' }} />
+						<span className="wordmark">FRACTALS</span>
 					</a>
 
 					<nav aria-label="Primary navigation">
